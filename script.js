@@ -5,20 +5,24 @@ const score0El = document.querySelector('#score--0');
 const socre1El = document.getElementById('score--1');
 const diceEl = document.querySelector('.dice');
 const btnRoll = document.querySelector('.btn--roll');
-
-console.log(buttonRoll);
+const btnNew = document.querySelector('.btn--new');
+const btnHold = document.querySelector('.btn--hold');
 
 //starting conditions
 score0El.textContent = 0;
 socre1El.textContent = 0;
 diceEl.classList.add('hidden');
 
+//Rolling the dice funtionality
 btnRoll.addEventListener('click', function () {
   //generating a random number
-  let randomNumb = Math.trunc(Math.random() * 6 + 1);
-  console.log('the random number is', randomNumb);
+  let dice = Math.trunc(Math.random() * 6) + 1;
+  console.log('the random number is', dice);
 
-  switch (randomNumb) {
+  //display the dice
+  diceEl.classList.remove('hidden');
+
+  switch (dice) {
     case 1:
       diceEl.src = 'dice-1.png';
       break;
