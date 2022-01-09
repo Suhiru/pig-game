@@ -13,9 +13,6 @@ const btnHold = document.querySelector('.btn--hold');
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 
-console.log(player0El);
-console.log(player1El);
-
 //current score variable
 let currentScore = 0;
 
@@ -35,42 +32,39 @@ diceEl.classList.add('hidden');
 btnRoll.addEventListener('click', function () {
   //generating a random number
   let dice = Math.trunc(Math.random() * 6) + 1;
-  console.log('the random number is', dice);
 
   //display the dice
   diceEl.classList.remove('hidden');
   diceEl.src = `dice-${dice}.png`;
 
-  if (!activePlayer) {
-    if (dice !== 1) {
-      currentScore += dice;
-      currentScore0El.textContent = currentScore; //change later
-    } else {
-      currentScore = 0;
-      currentScore0El.textContent = currentScore;
-
-      //changing CSS style to indicate active player
-      player0El.classList.remove('player--active');
-      player1El.classList.add('player--active');
-
-      //and switch to the next player
-      activePlayer = 1;
-    }
+  if (dice !== 1) {
+    currentScore += dice;
+    console.log(currentScore);
+    console.log('the active player if', activePlayer);
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   } else {
-    if (dice !== 1) {
-      currentScore += dice;
-      currentScore1El.textContent = currentScore; //change later
+    currentScore = 0;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
+
+    //removing CSS style from current avtive player
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+
+    //and switch the active player
+    if (activePlayer === 0) {
+      activePlayer = 1;
     } else {
-      currentScore = 0;
-      currentScore1El.textContent = currentScore;
-
-      //changing CSS style to indicate active player
-      player0El.classList.add('player--active');
-      player1El.classList.remove('player--active');
-
-      //and switch to the next player
       activePlayer = 0;
     }
+    console.log('active player else', activePlayer);
+
+    //adding the CSS style to the other player
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--active');
   }
 });
 
@@ -105,6 +99,7 @@ btnNew.addEventListener('click', function () {
   score0 = 0;
   score1 = 0;
   currentScore = 0;
+  activePlayer = 0;
 
   //hiding the dice
   diceEl.classList.add('hidden');
